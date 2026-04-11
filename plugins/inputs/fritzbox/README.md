@@ -160,9 +160,12 @@ specification][tr064].
     - `optical_signal_level`           (uint)   - Optical signal level (mdBm)
     - `lower_optical_threshold`        (uint)   - Lower optical threshold (mdBm)
     - `upper_optical_threshold`        (uint)   - Upper optical threshold (mdBm)
-    - `transmit_optical_level`         (uint)   - Transmit optical signal level (mdBm)
-    - `lower_transmit_power_threshold` (uint)   - Lower transmit power threshold (mdBm)
-    - `upper_transmit_power_threshold` (uint)   - Upper transmit power threshold (mdBm)
+    - `transmit_optical_level`         (uint)   - Transmit optical signal level
+                                                  (mdBm)
+    - `lower_transmit_power_threshold` (uint)   - Lower transmit power
+                                                  threshold (mdBm)
+    - `upper_transmit_power_threshold` (uint)   - Upper transmit power
+                                                  threshold (mdBm)
     - `sfp_vendor`                     (string) - SFP module vendor
     - `sfp_part_number`                (string) - SFP module part number
     - `sfp_serial_number`              (string) - SFP module serial number
