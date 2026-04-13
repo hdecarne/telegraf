@@ -59,7 +59,7 @@ func (f *Fritzbox) Init() error {
 
 	// Use default collect options if nothing is configured
 	if len(f.Collect) == 0 {
-		f.Collect = []string{"device", "wan", "ppp", "dsl", "fiber", "wlan"}
+		f.Collect = []string{"device", "wan", "ppp", "dsl", "wlan"}
 	}
 
 	// Setup TLS
