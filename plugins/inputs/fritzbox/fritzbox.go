@@ -314,7 +314,6 @@ func gatherFiberInfo(acc telegraf.Accumulator, deviceClient *tr064.Client, servi
 	tags := map[string]string{
 		"source":  serviceClient.TR064Client.DeviceUrl.Hostname(),
 		"service": serviceClient.Service.ShortId(),
-		//TODO:		"status":  info.NewStatus,
 	}
 	fields := map[string]interface{}{
 		"optical_signal_level":           info.NewOpticalSignalLevel,
