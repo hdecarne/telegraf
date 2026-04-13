@@ -78,11 +78,11 @@ bandwidth. Will create `fritzbox_hosts` metrics.
 > very detailed data. If you activate this option, consider increasing
 > the plugin's query interval to avoid interval overruns and to minimize
 > the amount of collected data.
-
-> [!NOTE] An empty `collect` option defaults to the set
-> `["device", "wan", "ppp", "dsl", "wlan"]` supported by the initial
-> release of the plugin. Newly added options like `fiber` must be
-> enabled explicitly.
+ 
+An empty `collect` option defaults to the set
+`["device", "wan", "ppp", "dsl", "wlan"]` supported by the initial
+release of the plugin. Newly added options like `fiber` must be
+enabled explicitly.
 
 ## Metrics
 
