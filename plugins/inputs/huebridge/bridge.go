@@ -66,11 +66,12 @@ func (b *bridge) processLights(ctx context.Context, acc telegraf.Accumulator) er
 	}
 	responseData := getLightsResponse.JSON200.Data
 	for _, light := range responseData {
-		tags := make(map[string]string)
-		tags["bridge_id"] = b.resolvedClient.Bridge().BridgeId
-		tags["room"] = b.resolveResourceRoom(light.Id, light.Metadata.Name)
-		tags["device"] = light.Metadata.Name
-		fields := make(map[string]interface{})
+		tags := map[string]string{
+			"bridge_id": b.resolvedClient.Bridge().BridgeId,
+			"room":      b.resolveResourceRoom(light.Id, light.Metadata.Name),
+			"device":    light.Metadata.Name,
+		}
+		fields := make(map[string]interface{}, 1)
 		if light.On.On {
 			fields["on"] = 1
 		} else {
@@ -92,13 +93,15 @@ func (b *bridge) processTemperatures(ctx context.Context, acc telegraf.Accumulat
 	responseData := getTemperaturesResponse.JSON200.Data
 	for _, temperature := range responseData {
 		temperatureName := b.resolveDeviceName(temperature.Id)
-		tags := make(map[string]string)
-		tags["bridge_id"] = b.resolvedClient.Bridge().BridgeId
-		tags["room"] = b.resolveResourceRoom(temperature.Id, temperatureName)
-		tags["device"] = temperatureName
-		tags["enabled"] = strconv.FormatBool(temperature.Enabled)
-		fields := make(map[string]interface{})
-		fields["temperature"] = *temperature.Temperature.TemperatureReport.Temperature
+		tags := map[string]string{
+			"bridge_id": b.resolvedClient.Bridge().BridgeId,
+			"room":      b.resolveResourceRoom(temperature.Id, temperatureName),
+			"device":    temperatureName,
+			"enabled":   strconv.FormatBool(temperature.Enabled),
+		}
+		fields := map[string]interface{}{
+			"temperature": *temperature.Temperature.TemperatureReport.Temperature,
+		}
 		acc.AddGauge("huebridge_temperature", fields, tags)
 	}
 	return nil
@@ -115,14 +118,16 @@ func (b *bridge) processLightLevels(ctx context.Context, acc telegraf.Accumulato
 	responseData := getLightLevelsResponse.JSON200.Data
 	for _, lightLevel := range responseData {
 		lightLevelName := b.resolveDeviceName(lightLevel.Id)
-		tags := make(map[string]string)
-		tags["bridge_id"] = b.resolvedClient.Bridge().BridgeId
-		tags["room"] = b.resolveResourceRoom(lightLevel.Id, lightLevelName)
-		tags["device"] = lightLevelName
-		tags["enabled"] = strconv.FormatBool(lightLevel.Enabled)
-		fields := make(map[string]interface{})
-		fields["light_level"] = *lightLevel.Light.LightLevelReport.LightLevel
-		fields["light_level_lux"] = math.Pow(10.0, (float64(*lightLevel.Light.LightLevelReport.LightLevel)-1.0)/10000.0)
+		tags := map[string]string{
+			"bridge_id": b.resolvedClient.Bridge().BridgeId,
+			"room":      b.resolveResourceRoom(lightLevel.Id, lightLevelName),
+			"device":    lightLevelName,
+			"enabled":   strconv.FormatBool(lightLevel.Enabled),
+		}
+		fields := map[string]interface{}{
+			"light_level":     *lightLevel.Light.LightLevelReport.LightLevel,
+			"light_level_lux": math.Pow(10.0, (float64(*lightLevel.Light.LightLevelReport.LightLevel)-1.0)/10000.0),
+		}
 		acc.AddGauge("huebridge_light_level", fields, tags)
 	}
 	return nil
@@ -139,12 +144,13 @@ func (b *bridge) processMotionSensors(ctx context.Context, acc telegraf.Accumula
 	responseData := getMotionSensorsResponse.JSON200.Data
 	for _, motionSensor := range responseData {
 		motionSensorName := b.resolveDeviceName(motionSensor.Id)
-		tags := make(map[string]string)
-		tags["bridge_id"] = b.resolvedClient.Bridge().BridgeId
-		tags["room"] = b.resolveResourceRoom(motionSensor.Id, motionSensorName)
-		tags["device"] = motionSensorName
-		tags["enabled"] = strconv.FormatBool(motionSensor.Enabled)
-		fields := make(map[string]interface{})
+		tags := map[string]string{
+			"bridge_id": b.resolvedClient.Bridge().BridgeId,
+			"room":      b.resolveResourceRoom(motionSensor.Id, motionSensorName),
+			"device":    motionSensorName,
+			"enabled":   strconv.FormatBool(motionSensor.Enabled),
+		}
+		fields := make(map[string]interface{}, 1)
 		if *motionSensor.Motion.MotionReport.Motion {
 			fields["motion"] = 1
 		} else {
@@ -169,13 +175,15 @@ func (b *bridge) processDevicePowers(ctx context.Context, acc telegraf.Accumulat
 			continue
 		}
 		devicePowerName := b.resolveDeviceName(devicePower.Id)
-		tags := make(map[string]string)
-		tags["bridge_id"] = b.resolvedClient.Bridge().BridgeId
-		tags["room"] = b.resolveResourceRoom(devicePower.Id, devicePowerName)
-		tags["device"] = devicePowerName
-		fields := make(map[string]interface{})
-		fields["battery_level"] = *devicePower.PowerState.BatteryLevel
-		fields["battery_state"] = *devicePower.PowerState.BatteryState
+		tags := map[string]string{
+			"bridge_id": b.resolvedClient.Bridge().BridgeId,
+			"room":      b.resolveResourceRoom(devicePower.Id, devicePowerName),
+			"device":    devicePowerName,
+		}
+		fields := map[string]interface{}{
+			"battery_level": *devicePower.PowerState.BatteryLevel,
+			"battery_state": *devicePower.PowerState.BatteryState,
+		}
 		acc.AddGauge("huebridge_device_power", fields, tags)
 	}
 	return nil
