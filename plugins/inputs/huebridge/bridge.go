@@ -89,7 +89,7 @@ func (b *bridge) processLights(ctx context.Context, acc telegraf.Accumulator) er
 			fields["color_x"] = float64(light.Color.Xy.X)
 			fields["color_y"] = float64(light.Color.Xy.Y)
 		}
-    acc.AddGauge("huebridge_light", fields, tags)
+		acc.AddGauge("huebridge_light", fields, tags)
 	}
 	return nil
 }
