@@ -29,7 +29,7 @@ func TestValidDefaultConfig(t *testing.T) {
 
 	// Verify everything is setup according to plugin defaults
 	require.ElementsMatch(t, []string{"http://user:password@fritz.box:49000/"}, f.URLs)
-	require.Equal(t, []string{"device", "wan", "ppp", "dsl", "fiber", "wlan"}, f.Collect)
+	require.Equal(t, []string{"device", "wan", "ppp", "dsl", "wlan"}, f.Collect)
 	require.Equal(t, config.Duration(10*time.Second), f.Timeout)
 	require.Empty(t, f.TLSKeyPwd)
 	require.False(t, f.InsecureSkipVerify)
